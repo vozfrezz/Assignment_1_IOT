@@ -11,6 +11,7 @@ float Pi = 3.1415926535897932384626433;
 float p;       // chu vi tam giac
 float s;       // dien tich tam giac
 float a, b, c; // AB=C, BC=a, AC=b
+char diem = 'A';
 
 void nhap_toado();
 void kiemtra_tamgiac();
@@ -137,12 +138,21 @@ void dientich_tamgiac() {
 
 // Duong cao tam giac S=a.h/2 vay h=2S/a
 void duongcao_tamgiac() {
-  H[0] = 2 * s / S[1];
+  int i;
+  S[3] = S[0];
+  for (i = 0; i <= 2; i++) {
+    H[i] = 2 * s / S[i + 1];
+    printf("\nDuong cao tu dinh %c la: %0.2f", diem, H[i]);
+    diem++;
+  }
+
+  /*H[0] = 2 * s / S[1];
   H[1] = 2 * s / S[2];
   H[2] = 2 * s / S[0];
   printf("\nDuong cao tu dinh A la:%0.2f", H[0]);
   printf("\nDuong cao tu dinh B la:%0.2f", H[1]);
   printf("\nDuong cao tu dinh C la:%0.2f", H[2]);
+*/
 };
 
 void trungtuyen_tamgiac() {
