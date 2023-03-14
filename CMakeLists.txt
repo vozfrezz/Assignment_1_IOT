@@ -1,0 +1,10 @@
+
+cmake_minimum_required(VERSION 3.25)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_C_COMPILER gcc) 
+set(CMAKE_CXX_COMPILER g++)
+project(Assignment_1)
+include_directories(include)
+#set(SOURCES src/square.c src/assign1.c src/draft.c)
+file(GLOB SOURCES "src/*.c")
+add_executable(Assignment ${SOURCES})
