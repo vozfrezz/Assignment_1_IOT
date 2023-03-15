@@ -17,6 +17,7 @@ void normal_triangle();
 void caculate_area();
 void altitudes_caculate();
 void medians_caculate();
+void median_point_triangle();
 
 int main() {
   input_coords();
@@ -26,6 +27,7 @@ int main() {
   caculate_area();
   altitudes_caculate();
   medians_caculate();
+  median_point_triangle();
 };
 
 void input_coords() {
@@ -42,12 +44,14 @@ void input_coords() {
 };
 
 void is_triangle() {
-  triangle_info[1] = sqrt(pow(coords[4] - coords[2], 2) +
-                          pow(coords[5] - coords[3], 2)); // a = BC
-  triangle_info[2] = sqrt(pow(coords[4] - coords[0], 2) +
-                          pow(coords[5] - coords[1], 2)); // b= AC
   triangle_info[0] = sqrt(pow(coords[2] - coords[0], 2) +
                           pow(coords[3] - coords[1], 2)); // c =AB
+
+  triangle_info[1] = sqrt(pow(coords[4] - coords[2], 2) +
+                          pow(coords[5] - coords[3], 2)); // a = BC
+
+  triangle_info[2] = sqrt(pow(coords[4] - coords[0], 2) +
+                          pow(coords[5] - coords[1], 2)); // b= AC
   AB = triangle_info[0];
   BC = triangle_info[1];
   AC = triangle_info[2];
@@ -125,14 +129,14 @@ void normal_triangle() {
 void caculate_area() {
   p = (AB + BC + AC) / 2;
   area = sqrt(p * (p - BC) * (p - AC) * (p - AB));
-  printf("\nDien tich tam giac ACB la: %f", area);
+  printf("\nDien tich tam giac ACB la: %0.2f", area);
 };
 
 // Duong cao tam giac S=a.h/2 vay h=2S/a
 void altitudes_caculate() {
-  Ah = 2 * area;
-  Bh = 2 * area;
-  Ch = 2 * area;
+  Ah = (2 * area) / BC;
+  Bh = (2 * area) / AC;
+  Ch = (2 * area) / AB;
   altitude[0] = Ah;
   altitude[1] = Bh;
   altitude[2] = Ch;
@@ -150,7 +154,15 @@ void medians_caculate() {
   medians[1] = mB;
   medians[2] = mC;
 
-  printf("\nDo dai duong cao tu dinh A: %f", mA);
-  printf("\nDo dai duong cao tu dinh B: %f", mB);
-  printf("\nDo dai duong cao tu dinh C: %f", mC);
+  printf("\nDo dai duong trung tuyen tu dinh A: %f", mA);
+  printf("\nDo dai duong trung tuyen tu dinh B: %f", mB);
+  printf("\nDo dai duong trung tuyen tu dinh C: %f", mC);
+};
+
+void median_point_triangle() {
+  float median_point_G[2] = {(coords[0] + coords[2] + coords[4]) / 3,
+                             (coords[1] + coords[3] + coords[5]) / 3};
+
+  printf("\nMedian point from A: M1(%.2f, %.2f)", median_point_G[0],
+         median_point_G[1]);
 };
