@@ -5,7 +5,6 @@
 float coords[6], altitude[3], medians[3], triangle_info[6]; // Coordinate
 float angleA, angleB, angleC, AB, BC, AC;
 float Ah, Bh, Ch, mA, mB, mC, p, area;
-char point = 'A'; // Point
 float Pi = 3.1415926535897932384626433;
 
 void input_coords();
@@ -31,6 +30,7 @@ int main() {
 };
 
 void input_coords() {
+  char point = 'A'; // Point
   int i;
   for (i = 0; i < (sizeof(coords) / sizeof(coords[0])); i += 2) {
     printf("\nNhap toa do diem %c:\n", point);
