@@ -1,13 +1,13 @@
-
-
 #include <math.h>
 #include <stdio.h>
 
+// Define global variables
 float coords[6], altitude[3], medians[3], triangle_info[6]; // Coordinate
 float angleA, angleB, angleC, AB, BC, AC;
 float Ah, Bh, Ch, mA, mB, mC, p, area;
 float Pi = 3.1415926535897932384626433;
 
+// Function prototypes
 void input_coords();
 int is_triangle();
 void side_triangle();
@@ -18,6 +18,7 @@ void caculate_area();
 void altitudes_caculate();
 void medians_caculate();
 void median_point_triangle();
+void decode_triangle();
 
 int main() {
   input_coords();
@@ -33,8 +34,9 @@ int main() {
   altitudes_caculate();
   medians_caculate();
   median_point_triangle();
+  return 0;
 };
-
+// Function to input coordinates
 void input_coords() {
   char point = 'A'; // Point
   int i;
@@ -50,7 +52,9 @@ void input_coords() {
   printf("Toa do diem C da nhap: C(%.2f,%.2f)\n", coords[4], coords[5]);
 };
 
+// Function to check if the entered coordinates form a triangle
 int is_triangle() {
+  // Calculate the side lengths
   triangle_info[0] = sqrt(pow(coords[2] - coords[0], 2) +
                           pow(coords[3] - coords[1], 2)); // c =AB
 
@@ -62,7 +66,7 @@ int is_triangle() {
   AB = triangle_info[0];
   BC = triangle_info[1];
   AC = triangle_info[2];
-  printf("------------------------------------------------------------");
+  // Check if the sum of two sides is greater than the third side
   if (BC + AC <= AB || BC + AB <= AC || AC + AB <= BC) {
     printf("\n3 diem A, B,C khong tao thanh tam giac\n");
     return 0;
@@ -72,12 +76,13 @@ int is_triangle() {
   };
 };
 
+// Function to print, calculate side lengths and angles
 void side_triangle() {
   printf("\n1. So do co ban cua tam giac:\n");
   printf("\nChieu dai canh BC: %.2f", BC);
   printf("\nChieu dai canh AC: %.2f", AC);
   printf("\nChieu dai canh AB: %.2f", AB);
-
+  // Calculate the angles using the cosine rule
   triangle_info[3] =
       acos((pow(AC, 2) + pow(AB, 2) - pow(BC, 2)) / (2 * AC * AB));
   triangle_info[4] =
@@ -93,6 +98,7 @@ void side_triangle() {
   printf("\nGoc C co gia tri la: %0.2f\n", angleC);
 };
 
+// Function to classify the triangle
 void classify_triangle() {
   if (AB == BC == AC) {
     printf("\nACB la tam giac deu");
@@ -103,6 +109,7 @@ void classify_triangle() {
   };
 };
 
+// Function to check if the triangle is right-angled
 void is_righttriangle() {
   if (angleA == 90) {
     printf(" \ntam giac vuong can ta B");
@@ -123,6 +130,8 @@ void is_righttriangle() {
     };
   };
 };
+
+// Function to check if the triangle is oblique
 void normal_triangle() {
   if (angleB > 90) {
     printf("\nTam giac ACB nhon va tu tai B");
@@ -135,13 +144,14 @@ void normal_triangle() {
   };
 };
 
+// Function to calculate the area of the triangle
 void caculate_area() {
   p = (AB + BC + AC) / 2;
   area = sqrt(p * (p - BC) * (p - AC) * (p - AB));
   printf("\n\n2. Dien tich tam giac ACB la: %0.2f\n", area);
 };
 
-// Duong cao tam giac S=a.h/2 vay h=2S/a
+// Function to calculate the altitudes of the triangle (S = a.h/2, so h = 2S/a)
 void altitudes_caculate() {
   Ah = (2 * area) / BC;
   Bh = (2 * area) / AC;
@@ -155,6 +165,7 @@ void altitudes_caculate() {
   printf("\nDuong cao tu dinh C la:%0.2f", Ch);
 };
 
+// Function to calculate the medians
 void medians_caculate() {
   mA = sqrt((AC * AC + AB * AB) / 2 - BC * BC / 4);
   mB = sqrt((BC * BC + AB * AB) / 2 - AC * AC / 4);
@@ -168,6 +179,7 @@ void medians_caculate() {
   printf("\nDo dai duong trung tuyen tu dinh C: %f\n", mC);
 };
 
+// Function to find the centroid of the triangle
 void median_point_triangle() {
   float median_point_G[2] = {(coords[0] + coords[2] + coords[4]) / 3,
                              (coords[1] + coords[3] + coords[5]) / 3};
@@ -175,4 +187,22 @@ void median_point_triangle() {
   printf("\nMedian point from A: M1(%.2f, "
          "%.2f)\n-------------------------------------------------",
          median_point_G[0], median_point_G[1]);
+};
+
+// Function to decode the triangle.
+
+void decode_triangle() {
+  input_coords();
+  while (is_triangle() == 0) {
+    printf("\nVui long nhap lai toa do:");
+    input_coords();
+  };
+  side_triangle();
+  is_triangle();
+  side_triangle();
+  classify_triangle();
+  caculate_area();
+  altitudes_caculate();
+  medians_caculate();
+  median_point_triangle();
 };
